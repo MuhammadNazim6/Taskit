@@ -1,15 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* body{
-  background-color: black;
-} */
+
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 99%;
+    --foreground: 222.2 100% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
@@ -66,8 +65,32 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Outfit', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.custom-scrollbar {
+  overflow-y: auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 9px; 
+  height: 9px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1a1a1a; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #1a1a1a;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
