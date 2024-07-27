@@ -18,15 +18,15 @@ import {
 import { Input } from "../ui/input";
 import { MdDeleteOutline } from "react-icons/md";
 import { LuClipboardEdit } from "react-icons/lu";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 
 const Content = () => {
+  const { taskUserInfo } = useSelector((state: RootState) => state.auth)
+
   const closeAddTaskModal = useRef()
   const [columns, setColumns] = useState({})
-  //   () => {
-  //   const savedColumns = localStorage.getItem("columns");
-  //   return savedColumns ? JSON.parse(savedColumns) : initialColumns;
-  // });
   const [newTask, setNewTask] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const [editedTask, setEditedTask] = useState('')
@@ -36,21 +36,25 @@ const Content = () => {
     fetchTasks()
   }, [])
 
-  // useEffect(() => {
-  //   localStorage.setItem("columns", JSON.stringify(columns));
-  // }, [columns]);
-
   const fetchTasks = async () => {
     const response = await Api.get('/get-tasks', {
-      params: { userId: '66a3a473a226e006429eff4c' }
+      params: { userId: taskUserInfo._id }
     })
     if (response.data.success) {
       const result = response.data.data[0]
-      setColumns({
-        todo: result.todo || { name: 'To do', items: [] },
-        progress: result.progress || { name: 'In Progress', items: [] },
-        done: result.done || { name: 'Done', items: [] }
-      });
+      if (result) {
+        setColumns({
+          todo: result.todo || { name: 'To do', items: [] },
+          progress: result.progress || { name: 'In Progress', items: [] },
+          done: result.done || { name: 'Done', items: [] }
+        });
+      } else {
+        setColumns({
+          todo: { name: 'To do', items: [] },
+          progress: { name: 'In Progress', items: [] },
+          done: { name: 'Done', items: [] }
+        });
+      }
     }
   }
 
@@ -98,7 +102,7 @@ const Content = () => {
 
 
   const handleAddTask = async () => {
-    const data = { content: newTask, userId: '66a3a473a226e006429eff4c' }
+    const data = { content: newTask, userId: taskUserInfo._id }
     const response = await Api.post('/add-task', data)
     console.log(response.data.success);
     if (response.data.success) {
@@ -156,7 +160,7 @@ const Content = () => {
 
   return (
     <>
-      <div className="w-full flex pl-36">
+      <div className="w-full flex pl-36 pt-10">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="outline outline-1">Add new task</Button>

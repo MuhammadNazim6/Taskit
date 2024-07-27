@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '@/components/User/Navbar'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -6,16 +6,17 @@ import { z } from "zod"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Api from '@/services/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCredentials } from '@/redux/slices/authSlice'
+import { RootState } from '@/redux/store'
 
 
 const FormSchema = z.object({
@@ -30,6 +31,16 @@ const FormSchema = z.object({
   }),
 })
 function Signup() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const { taskUserLoggedIn } = useSelector((state: RootState) => state.auth)
+
+  useEffect(()=>{
+    if(taskUserLoggedIn){
+      navigate("/", { replace: true });
+    }
+  })
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -42,8 +53,10 @@ function Signup() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const response = await Api.post('/signup', data)
-    console.log(response);
-
+    if (response.data.success) {
+      dispatch(setCredentials({ ...response.data.data }));
+      navigate("/", { replace: true });
+    }
   }
   return (
     <div className="min-h-screen flex flex-col">
