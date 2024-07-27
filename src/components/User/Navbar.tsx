@@ -72,7 +72,7 @@ function Navbar() {
 
   return (
     <div className="w-full flex justify-between p-7 px-12 border-b-2">
-      <NavLink to='/' className="p-3">Productiv</NavLink>
+      <NavLink to='/' className="p-3">Taskit</NavLink>
       <div className="flex space-x-14">
       </div>
       <div className="flex items-center justify-center space-x-5">
