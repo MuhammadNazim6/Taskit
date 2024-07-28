@@ -33,6 +33,8 @@ import { setCredentials, userLogout } from '@/redux/slices/authSlice'
 import { RootState } from '@/redux/store'
 import axios from 'axios';
 import { useToast } from "@/components/ui/use-toast"
+import logo from '@/assets/logo.svg'
+import logoWhite from '@/assets/logo.png'
 
 
 
@@ -69,7 +71,7 @@ function Navbar() {
       if (loginModalClose.current) loginModalClose.current.click()
       dispatch(setCredentials({ ...response.data.data }));
       navigate("/", { replace: true });
-    }else{
+    } else {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -100,7 +102,7 @@ function Navbar() {
           if (loginModalClose.current) loginModalClose.current.click()
           dispatch(setCredentials({ ...signed.data.data }))
           navigate("/", { replace: true });
-        }else{
+        } else {
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
@@ -109,13 +111,19 @@ function Navbar() {
         }
       } catch (error) {
         console.error(error);
-      }  
+      }
     },
   });
 
   return (
     <div className="w-full flex justify-between p-5 md:px-12 border-b-2">
-      <NavLink to='/' className="p-3">Taskit</NavLink>
+      <div className="flex items-center">
+      <div className="relative w-10 h-10">
+      <img src={logo} alt="Logo 1" className="absolute top-0 left-0 w-1h-10 h-10" />
+      <img src={logoWhite} alt="Logo 2" className="absolute top-0 left-0 w-1h-10 h-10 opacity-75" />
+    </div>
+        <NavLink to='/' className="p-">Taskit</NavLink>
+      </div>
       <div className="flex space-x-14">
       </div>
       <div className="flex items-center justify-center space-x-5">
