@@ -6,8 +6,8 @@ function LandingPage() {
   return (
     <div className='flex justify-center items-center h-[500px]'>
       <div className="">
-        <h1 className='text-6xl'>Manage Tasks With Ease.</h1>
-        <p className='pl-1'>Get Started for Free</p>
+        <h1 className='text-6xl text-center'>Manage Tasks With Ease.</h1>
+        <p className='pl-1 hidden md:block'>Get Started for Free</p>
         <section className='text-center'>
           <div className="mt-24">
             <div className='mb-10'>

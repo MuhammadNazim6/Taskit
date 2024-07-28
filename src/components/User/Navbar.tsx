@@ -114,7 +114,7 @@ function Navbar() {
   });
 
   return (
-    <div className="w-full flex justify-between p-7 px-12 border-b-2">
+    <div className="w-full flex justify-between p-5 md:px-12 border-b-2">
       <NavLink to='/' className="p-3">Taskit</NavLink>
       <div className="flex space-x-14">
       </div>
@@ -146,7 +146,7 @@ function Navbar() {
                 <AlertDialogDescription className=''>
                   <div className="flex justify-center items-center mt-9">
                     <Form {...form}>
-                      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full sm:w-2/3 md:w-2/3 space-y-6">
                         <FormField
                           control={form.control}
                           name="email"

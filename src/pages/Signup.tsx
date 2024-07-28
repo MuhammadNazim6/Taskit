@@ -105,7 +105,7 @@ function Signup() {
       <Navbar />
       <div className="flex flex-1 justify-center items-center">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-4/5 sm:w-2/3 md:w-1/3 space-y-6">
             <FormField
               control={form.control}
               name="name"

@@ -190,9 +190,9 @@ const Content = () => {
                 <h2 className="text-centr p-2 text-sm">{column?.name}</h2>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
-                    return (
+                    return (  
                       <div
-                        className="rounded outline outline-1 "
+                        className="rounded outline outline-1"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         style={{
