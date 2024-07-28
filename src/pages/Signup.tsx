@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '@/components/User/Navbar'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -20,6 +20,7 @@ import { setCredentials } from '@/redux/slices/authSlice'
 import { RootState } from '@/redux/store'
 import axios from 'axios';
 import { useToast } from '@/components/ui/use-toast';
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
 const FormSchema = z.object({
@@ -37,6 +38,7 @@ function Signup() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { toast } = useToast()
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const { taskUserLoggedIn } = useSelector((state: RootState) => state.auth)
@@ -61,7 +63,7 @@ function Signup() {
     if (response.data.success) {
       dispatch(setCredentials({ ...response.data.data }));
       navigate("/", { replace: true });
-    }else{
+    } else {
       console.log(response);
       toast({
         variant: "destructive",
@@ -100,6 +102,10 @@ function Signup() {
     },
   });
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -136,7 +142,15 @@ function Signup() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Password" className="outline outline-1" {...field} />
+                    <div className='relative'>
+                      <Input placeholder="Password" className="outline outline-1" {...field} type={showPassword ? "text" : "password"} />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute text-xl inset-y-5 right-2 flex items-center px-2 text-gray-500"
+                      >  {showPassword ? (<FaEyeSlash />) : (<FaEye />)}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

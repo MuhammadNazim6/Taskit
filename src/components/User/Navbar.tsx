@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { ModeToggle } from '../mode-toggle'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
@@ -35,6 +35,8 @@ import axios from 'axios';
 import { useToast } from "@/components/ui/use-toast"
 import logo from '@/assets/logo.svg'
 import logoWhite from '@/assets/logo.png'
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+
 
 
 
@@ -55,6 +57,7 @@ function Navbar() {
   const navigate = useNavigate()
   const loginModalClose = useRef()
   const { toast } = useToast()
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -115,13 +118,17 @@ function Navbar() {
     },
   });
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="w-full flex justify-between p-5 md:px-12 border-b-2">
       <div className="flex items-center">
-      <div className="relative w-10 h-10">
-      <img src={logo} alt="Logo 1" className="absolute top-0 left-0 w-1h-10 h-10" />
-      <img src={logoWhite} alt="Logo 2" className="absolute top-0 left-0 w-1h-10 h-10 opacity-75" />
-    </div>
+        <div className="relative w-10 h-10">
+          <img src={logo} alt="Logo 1" className="absolute top-0 left-0 w-1h-10 h-10" />
+          <img src={logoWhite} alt="Logo 2" className="absolute top-0 left-0 w-1h-10 h-10 opacity-75" />
+        </div>
         <NavLink to='/' className="p-">Taskit</NavLink>
       </div>
       <div className="flex space-x-14">
@@ -172,12 +179,22 @@ function Navbar() {
                           name="password"
                           render={({ field }) => (
                             <FormItem>
-                              <FormControl>
-                                <Input placeholder="Password" className='outline outline-1 '{...field} />
+                              <FormControl >
+                                <div className='relative'>
+                                <Input placeholder="Password" className='outline outline-1 '{...field} type={showPassword ? "text" : "password"}/>
+                                <button
+                                  type="button"
+                                  onClick={togglePasswordVisibility}
+                                  className="absolute text-xl inset-y-5 right-2 flex items-center px-2 text-gray-500"
+                                >
+                                  {showPassword ? (<FaEyeSlash />) : (<FaEye />)}
+                                </button>
+                                </div>
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
+
                         />
                         <div className="flex justify-center">
                           <Button type="submit" className='w-full mt-10'>Login</Button>
