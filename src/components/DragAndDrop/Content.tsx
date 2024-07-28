@@ -160,7 +160,8 @@ const Content = () => {
 
   return (
     <>
-      <div className="w-full flex pl-36 pt-10">
+    <h1 className="text-center text-xl mt-5">Hello {taskUserInfo.name.split(' ')[taskUserInfo.name.split(' ').length-1]} !</h1>
+      <div className="w-full flex md:pl-36 justify-center md:justify-normal pt-10">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="outline outline-1">Add new task</Button>
@@ -184,124 +185,127 @@ const Content = () => {
 
       <div className="" style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
         <DragDropContext onDragEnd={onDragEnd}>
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <div style={{ margin: 8 }} key={columnId}>
-                <h2 className="text-centr p-2 text-sm">{column?.name}</h2>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
-                    return (  
-                      <div
-                        className="rounded outline outline-1"
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={{
-                          // background: snapshot.isDraggingOver
-                          //   ? 'white' : '#D6E5EC',
-                          padding: 19,
-                          width: 240,
-                          minHeight: 300
-                        }}
-                      >
-                        {column?.items.map((item, index) => {
-                          return (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => {
-                                return (
-                                  <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                      <div
-                                        className="outlin outline-1 bg-secondary text-primary"
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={{
-                                          userSelect: 'none',
-                                          padding: 16,
-                                          margin: "0 0 8px 0",
-                                          minHeight: "50px",
-                                          // backgroundColor: snapshot.isDragging
-                                          //   ? "#4e6a80"
-                                          //   : "#75909f",
-                                          // color: 'white',
-                                          borderRadius: '4px',
-                                          ...provided.draggableProps.style
-                                        }}
-                                      >
-                                        <p className="text-sm tracking-wider"> {item.content}</p>
-                                      </div>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle>Task details</AlertDialogTitle>
-                                        <AlertDialogDescription className="">
-                                          <div className="flex h-full pt-5 justify-between">
-                                            <p className="w-full pr-8">
-                                              {isEditing ? (<Input placeholder="Your task here..." value={editedTask} className='outline outline-1 w-full overflow-y-scroll custom-scrollbar' onChange={(e) => setEditedTask(e.target.value)} />
-                                              ) : (<>
-                                                <p className="text-lg items-center w-full max-h-60 overflow-y-scroll custom-scrollbar">{item.content} </p>
-                                                <p className="text-sm items-center pt-32"> Updated at: {new Date(item.updatedAt).toLocaleString()}</p>
-                                              </>)}
-
-                                            </p>
-                                            <div className="mt-10 space-y-6">
-                                              {isEditing
-                                                ? (<>
-                                                  <Button variant="default" className="block w-16 p-1" onClick={() => handleSaveEditedTask(item.id)}>Save</Button>
-                                                  <Button variant="outline" onClick={() => setIsEditing(false)} className="block w-16 p-1">Cancel</Button> </>
-                                                )
-                                                : (<>
-                                                  <Button variant="default" className="block" onClick={() => handleIsEditing(item.content)}><LuClipboardEdit className="text-xl" /></Button>
-
-                                                  <AlertDialog>
-                                                    <AlertDialogTrigger asChild>
-                                                      <Button variant="default" className="block bg-red-900 hover:bg-red-950 text-white"><MdDeleteOutline className="text-2xl" /></Button>
-                                                    </AlertDialogTrigger>
-                                                    <AlertDialogContent>
-                                                      <AlertDialogHeader>
-                                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                          This action cannot be undone.
-                                                        </AlertDialogDescription>
-                                                      </AlertDialogHeader>
-                                                      <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction onClick={() => handleDeleteTask(item.id)}>Delete </AlertDialogAction>
-                                                      </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                  </AlertDialog>
-
-
-                                                  <AlertDialogCancel onClick={() => setIsEditing(false)} className="block"><RiArrowGoBackLine className="text-lg" /></AlertDialogCancel>
+          <div className="md:flex">
+            {Object.entries(columns).map(([columnId, column], index) => {
+              return (
+                <div style={{ margin: 8 }} key={columnId}>
+                  <h2 className="text-centr p-2 text-sm">{column?.name}</h2>
+                  <Droppable droppableId={columnId} key={columnId}>
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          className="rounded outline outline-1"
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          style={{
+                            // background: snapshot.isDraggingOver
+                            //   ? 'white' : '#D6E5EC',
+                            padding: 19,
+                            width: 240,
+                            minHeight: 250
+                          }}
+                        >
+                          {column?.items.map((item, index) => {
+                            return (
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <AlertDialog>
+                                      <AlertDialogTrigger asChild>
+                                        <div
+                                          className="outlin outline-1 bg-secondary text-primary"
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          style={{
+                                            userSelect: 'none',
+                                            padding: 16,
+                                            margin: "0 0 8px 0",
+                                            minHeight: "50px",
+                                            // backgroundColor: snapshot.isDragging
+                                            //   ? "#4e6a80"
+                                            //   : "#75909f",
+                                            // color: 'white',
+                                            borderRadius: '4px',
+                                            ...provided.draggableProps.style
+                                          }}
+                                        >
+                                          <p className="text-sm tracking-wider"> {item.content}</p>
+                                        </div>
+                                      </AlertDialogTrigger>
+                                      <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                          <AlertDialogTitle>Task details</AlertDialogTitle>
+                                          <AlertDialogDescription className="">
+                                            <div className="flex h-full pt-5 justify-between">
+                                              <p className="w-full pr-8">
+                                                {isEditing ? (<Input placeholder="Your task here..." value={editedTask} className='outline outline-1 w-full overflow-y-scroll custom-scrollbar' onChange={(e) => setEditedTask(e.target.value)} />
+                                                ) : (<>
+                                                  <p className="text-lg items-center w-full max-h-60 overflow-y-scroll custom-scrollbar">{item.content} </p>
+                                                  <p className="text-sm items-center pt-32"> Updated at: {new Date(item.updatedAt).toLocaleString()}</p>
                                                 </>)}
 
+                                              </p>
+                                              <div className="mt-10 space-y-6">
+                                                {isEditing
+                                                  ? (<>
+                                                    <Button variant="default" className="block w-16 p-1" onClick={() => handleSaveEditedTask(item.id)}>Save</Button>
+                                                    <Button variant="outline" onClick={() => setIsEditing(false)} className="block w-16 p-1">Cancel</Button> </>
+                                                  )
+                                                  : (<>
+                                                    <Button variant="default" className="block" onClick={() => handleIsEditing(item.content)}><LuClipboardEdit className="text-xl" /></Button>
+
+                                                    <AlertDialog>
+                                                      <AlertDialogTrigger asChild>
+                                                        <Button variant="default" className="block bg-red-900 hover:bg-red-950 text-white"><MdDeleteOutline className="text-2xl" /></Button>
+                                                      </AlertDialogTrigger>
+                                                      <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                          <AlertDialogDescription>
+                                                            This action cannot be undone.
+                                                          </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                          <AlertDialogAction onClick={() => handleDeleteTask(item.id)}>Delete </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                      </AlertDialogContent>
+                                                    </AlertDialog>
+
+
+                                                    <AlertDialogCancel onClick={() => setIsEditing(false)} className="block"><RiArrowGoBackLine className="text-lg" /></AlertDialogCancel>
+                                                  </>)}
+
+                                              </div>
                                             </div>
-                                          </div>
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
+                                          </AlertDialogDescription>
+                                        </AlertDialogHeader>
 
-                                    </AlertDialogContent>
-                                  </AlertDialog>
+                                      </AlertDialogContent>
+                                    </AlertDialog>
 
-                                )
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                        {provided.placeholder}
-                      </div>
-                    );
-                  }}
-                </Droppable>
-              </div>
-            )
-          })}
+                                  )
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      );
+                    }}
+                  </Droppable>
+                </div>
+              )
+            })}
+          </div>
         </DragDropContext>
-      </div></>
+      </div>
+    </>
   )
 }
 
