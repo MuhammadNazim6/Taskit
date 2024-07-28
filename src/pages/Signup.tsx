@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCredentials } from '@/redux/slices/authSlice'
 import { RootState } from '@/redux/store'
 import axios from 'axios';
+import { useToast } from '@/components/ui/use-toast';
 
 
 const FormSchema = z.object({
@@ -35,6 +36,8 @@ const FormSchema = z.object({
 function Signup() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { toast } = useToast()
+
 
   const { taskUserLoggedIn } = useSelector((state: RootState) => state.auth)
 
@@ -58,6 +61,13 @@ function Signup() {
     if (response.data.success) {
       dispatch(setCredentials({ ...response.data.data }));
       navigate("/", { replace: true });
+    }else{
+      console.log(response);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: response.data.message,
+      })
     }
   }
 
@@ -77,6 +87,12 @@ function Signup() {
         if (signed.data.success) {
           dispatch(setCredentials({ ...signed.data.data }))
           navigate("/", { replace: true });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: signed.data.message,
+          })
         }
       } catch (error) {
         console.error(error);

@@ -32,7 +32,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCredentials, userLogout } from '@/redux/slices/authSlice'
 import { RootState } from '@/redux/store'
 import axios from 'axios';
-import { current } from '@reduxjs/toolkit';
+import { useToast } from "@/components/ui/use-toast"
+
 
 
 const FormSchema = z.object({
@@ -51,6 +52,8 @@ function Navbar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loginModalClose = useRef()
+  const { toast } = useToast()
+
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -63,10 +66,15 @@ function Navbar() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const response = await Api.post('/login', data)
     if (response.data.success) {
-      console.log(response.data.data);
-
+      if (loginModalClose.current) loginModalClose.current.click()
       dispatch(setCredentials({ ...response.data.data }));
       navigate("/", { replace: true });
+    }else{
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: response.data.message,
+      })
     }
   }
 
@@ -92,10 +100,16 @@ function Navbar() {
           if (loginModalClose.current) loginModalClose.current.click()
           dispatch(setCredentials({ ...signed.data.data }))
           navigate("/", { replace: true });
+        }else{
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: signed.data.message,
+          })
         }
       } catch (error) {
         console.error(error);
-      }
+      }  
     },
   });
 
@@ -158,7 +172,7 @@ function Navbar() {
                           )}
                         />
                         <div className="flex justify-center">
-                          <AlertDialogAction type="submit" className='w-full mt-10'>Login</AlertDialogAction>
+                          <Button type="submit" className='w-full mt-10'>Login</Button>
                         </div>
                         <div onClick={() => GoogleSignup()} className='cursor-pointer'>
                           <a
@@ -173,7 +187,6 @@ function Navbar() {
                         <p className='text-center'>new user?<NavLink to='/signup' className="p-2 text-blue-500">Signup</NavLink></p>
                       </form>
                     </Form>
-
                   </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -182,7 +195,6 @@ function Navbar() {
             </AlertDialogContent>
           </AlertDialog >)
         }
-
         <ModeToggle />
       </div >
     </div >
