@@ -160,8 +160,8 @@ const Content = () => {
 
   return (
     <>
-    <h1 className="text-center text-xl mt-5">Hello {taskUserInfo.name.split(' ')[taskUserInfo.name.split(' ').length-1]} !</h1>
-      <div className="w-full flex md:pl-36 justify-center md:justify-normal pt-10">
+    <h1 className="text-center text-xl mt-5 select-none ">Hello {taskUserInfo.name.split(' ')[taskUserInfo.name.split(' ').length-1]} !</h1>
+      <div className="w-full flex md:pl-36 justify-center md:justify-normal pt-10 select-none">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="outline outline-1">Add new task</Button>
@@ -189,12 +189,12 @@ const Content = () => {
             {Object.entries(columns).map(([columnId, column], index) => {
               return (
                 <div style={{ margin: 8 }} key={columnId}>
-                  <h2 className="text-centr p-2 text-sm">{column?.name}</h2>
+                  <h2 className="text-centr p-2 text-sm select-none">{column?.name}</h2>
                   <Droppable droppableId={columnId} key={columnId}>
                     {(provided, snapshot) => {
                       return (
                         <div
-                          className="rounded outline outline-1"
+                          className="rounded outline outline-1 "
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
@@ -238,7 +238,7 @@ const Content = () => {
                                         </div>
                                       </AlertDialogTrigger>
                                       <AlertDialogContent>
-                                        <AlertDialogHeader>
+                                        <AlertDialogHeader className="select-none">
                                           <AlertDialogTitle>Task details</AlertDialogTitle>
                                           <AlertDialogDescription className="">
                                             <div className="flex h-full pt-5 justify-between">

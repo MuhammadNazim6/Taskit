@@ -123,7 +123,7 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full flex justify-between p-5 md:px-12 border-b-2">
+    <div className="w-full flex justify-between p-5 md:px-12 border-b-2 select-none">
       <div className="flex items-center">
         <div className="relative w-10 h-10">
           <img src={logo} alt="Logo 1" className="absolute top-0 left-0 w-1h-10 h-10" />

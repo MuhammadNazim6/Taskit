@@ -19,7 +19,7 @@ function App() {
           speedFactor={0.05}
           backgroundColor="black"
         />
-        <UserRoutes />
+        <UserRoutes/>
       </GoogleOAuthProvider >
     </ThemeProvider>
   )
