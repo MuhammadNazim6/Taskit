@@ -202,7 +202,7 @@ const Content = () => {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      {!isFetching
+      {isFetching
         ? (
           <div className="flex justify-center items-center h-[400px]">
             {theme === 'light'
