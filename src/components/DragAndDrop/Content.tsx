@@ -25,7 +25,15 @@ import { useTheme } from "../theme-provider";
 import Lottie from 'lottie-react'
 import FetchBlack from '@/assets/animations/taskfetchingBlack.json'
 import FetchWhite from '@/assets/animations/taskFetchWhite.json'
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 const Content = () => {
@@ -41,7 +49,7 @@ const Content = () => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
 
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const { toast } = useToast()
 
   useEffect(() => {
@@ -112,7 +120,8 @@ const Content = () => {
   }
 
 
-  const handleAddTask = async () => {
+  const handleAddTask = async (e) => {
+    e.preventDefault()
     setIsAdding(true)
     const data = { content: newTask, userId: taskUserInfo._id }
     const response = await Api.post('/add-task', data)
@@ -187,7 +196,9 @@ const Content = () => {
               <AlertDialogTitle>Add new task</AlertDialogTitle>
               <AlertDialogDescription>
                 <div className="flex justify-center items-center mt-9">
-                  <Input placeholder="Your task here..." className='outline outline-1' value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+                  <form onSubmit={handleAddTask}>
+                    <Input placeholder="Your task here..." className='outline outline-1' value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+                  </form>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -226,8 +237,6 @@ const Content = () => {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                             style={{
-                              // background: snapshot.isDraggingOver
-                              //   ? 'white' : '#D6E5EC',
                               padding: 19,
                               width: 240,
                               minHeight: 250
@@ -255,10 +264,6 @@ const Content = () => {
                                                 padding: 16,
                                                 margin: "0 0 8px 0",
                                                 minHeight: "50px",
-                                                // backgroundColor: snapshot.isDragging
-                                                //   ? "#4e6a80"
-                                                //   : "#75909f",
-                                                // color: 'white',
                                                 borderRadius: '4px',
                                                 ...provided.draggableProps.style
                                               }}
@@ -287,6 +292,8 @@ const Content = () => {
 
                                                 </p>
                                                 <div className="mt-10 space-y-6">
+
+
                                                   {isEditing
                                                     ? (<>
                                                       {isSaving
@@ -318,6 +325,8 @@ const Content = () => {
                                                       </AlertDialog>
                                                       <AlertDialogCancel onClick={() => setIsEditing(false)} className="block"><RiArrowGoBackLine className="text-lg" /></AlertDialogCancel>
                                                     </>)}
+
+
                                                 </div>
                                               </div>
                                             </AlertDialogDescription>

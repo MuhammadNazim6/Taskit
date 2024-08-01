@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import './App.css'
 import UserRoutes from './routes/UserRoutes'
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider, useTheme } from "@/components/theme-provider"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Starfield from 'react-starfield'; 
 
 
-
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const { theme } = useTheme();
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
