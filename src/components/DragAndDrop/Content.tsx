@@ -186,7 +186,7 @@ const Content = () => {
   return (
     <>
       <h1 className="text-center text-xl mt-5 select-none ">Hello {taskUserInfo.name.split(' ')[taskUserInfo.name.split(' ').length - 1]} !</h1>
-      <h1 className="text-center mt-5 select-none text-sm tracking-widest"> Daily updates: 💡 Now you can use enter button to add </h1>
+      {/* <h1 className="text-center mt-5 select-none text-sm tracking-widest"> Daily updates: 💡 Now you can use enter button to add </h1>  */}
       <div className="w-full flex md:pl-36 justify-center md:justify-normal pt-10 select-none">
         <AlertDialog>
           <AlertDialogTrigger asChild>
