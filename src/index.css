@@ -77,7 +77,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 9px; 
+  width: 6px; 
   height: 9px;
 }
 

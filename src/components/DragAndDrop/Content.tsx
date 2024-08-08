@@ -234,7 +234,7 @@ const Content = () => {
                       {(provided, snapshot) => {
                         return (
                           <div
-                            className="rounded outline outline-1 "
+                            className="rounded outline outline-1 max-h-[470px] overflow-y-scroll custom-scrollbar"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                             style={{
